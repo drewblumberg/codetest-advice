@@ -8,6 +8,7 @@
 
 <div id="container">
 	<h1>Welcome to the Campaign Log!</h1>
+  <h2><a href="index.php/campaigns/all">See all campaigns</a></h2>
 
 	<div id="body">
     <p>Here is the list of all campaigns!</p>
