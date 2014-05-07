@@ -24,14 +24,24 @@ class Campaigns extends CI_Controller {
   }
 
   public function create() {
-    $clientid = intval($this->input->post('clientid')) + 1;
-    $data = array(
-      'name' => $this->input->post('name'),
-      'notes' => $this->input->post('notes'),
-      'clientid' => $clientid
-    );
+    $this->load->model('clients_model');
+    $this->load->library('form_validation');
+    $this->form_validation->set_rules('name', 'Name', 'trim|required|regex_match[/^[\s\da-zA-Z-_:!#]*$/]|xssclean');
+    $this->form_validation->set_rules('clientid', 'Client name', 'required');
+    $data['clients'] = $this->clients_model->get_all_clients();
 
-    $this->campaigns_model->add_record($data);
-    $this->index();
+    if ($this->form_validation->run() == FALSE) {
+      $this->load->view('campaigns_index', $data);
+    } else {
+      $clientid = intval($this->input->post('clientid')) + 1;
+      $data = array(
+        'name' => $this->input->post('name'),
+        'notes' => $this->input->post('notes'),
+        'clientid' => $clientid
+      );
+
+      $this->campaigns_model->add_record($data);
+      $this->index();
+    }
   }
 }

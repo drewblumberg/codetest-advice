@@ -17,15 +17,17 @@
 
   <div id="body">
     <div id="form">
+      <?php echo validation_errors(); ?>
       <?php
         $this->load->helper('form');
         echo form_open('campaigns/create');
 
         echo form_label("Name: ", "name");
+        $namevalue = set_value('name') == false ? "" : set_value('name');
         $data = array(
           "name" => "name",
           "id" => "name",
-          "value" => ""
+          "value" => $namevalue
         );
         echo form_input($data);
 
@@ -35,13 +37,13 @@
           $array = array($client->id => $client->name);
           $options = array_merge($options, $array);
         }
-        echo form_dropdown('clientid', $options);
+        echo form_dropdown('clientid', $options, set_value('clientid'));
 
         echo form_label("Notes: ", "notes");
+        $notesvalue = set_value('notes') == false ? "" : set_value('notes');
         $text = array(
           "name" => "notes",
-          "id" => "notes",
-          "value" => ""
+          "id" => "notes"
         );
         echo form_textarea($text); ?>
 
