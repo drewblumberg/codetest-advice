@@ -18,4 +18,9 @@ class Campaigns_model extends CI_Model {
     $query = $this->db->get('campaigns');
     return $query->result();
   }
+
+  public function add_record($data) {
+    $this->db->insert('campaigns', $data);
+    return;
+  }
 }
